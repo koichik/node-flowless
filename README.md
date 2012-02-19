@@ -111,6 +111,27 @@ is equivalent of:
 
     fs.readFile('foo.txt', 'utf8', cb);
 
+### flowless.makeAsync(fn)
+
+Returns a new function which invokes a synchronous function.
+
+ * Arguments
+   * `fn`: A synchronous function.
+ * Returns
+   * A function which invokes a synchronous function.
+
+Example:
+
+    var fn = flowless.makeAsync(function(a, b) {
+      return a + b;
+    }
+
+is equivalent of:
+
+    var fn = function(a, b, cb) {
+      cb(a + b);
+    }
+
 ## Acknowledgment
 
 flowless is inspired by [Slide](https://github.com/isaacs/slide-flow-control).
