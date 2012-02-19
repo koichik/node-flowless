@@ -19,7 +19,12 @@ describe('makeFunc', function() {
     func(function(err, result) {
       should.not.exist(err);
       result.should.equal(-1);
-      done();
+      // again
+      func(function(err, result) {
+        should.not.exist(err);
+        result.should.equal(-1);
+        done();
+      });
     });
   }),
   it('should convert placeholder to actual argument', function(done) {
@@ -28,7 +33,12 @@ describe('makeFunc', function() {
     func(1, 2, function(err, result) {
       should.not.exist(err);
       result.should.equal(1);
-      done();
+      // again
+      func(1, 2, function(err, result) {
+        should.not.exist(err);
+        result.should.equal(1);
+        done();
+      });
     });
   })
 });
