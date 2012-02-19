@@ -17,7 +17,7 @@ flowless is not a flawless :)
       },
       [fs.readFile, 'path3', 'utf8']
     ], function(err, result) {
-      if (this.err) throw this.err;
+      if (err) throw err;
       console.log(result);
       console.log('all done');
     });
