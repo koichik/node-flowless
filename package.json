@@ -1,0 +1,23 @@
+{
+  "name": "flowless",
+  "version": "0.0.0-pre",
+  "description": "Less but better control-flow library",
+  "homepage": "https://github.com/koichik/node-flowless/",
+  "author": "Koichi Kobayashi <koichik@improvement.jp>",
+  "main": "./index.js",
+  "licenses": {
+    "type": "The MIT License",
+    "url": "http://www.opensource.org/licenses/mit-license.php"
+  },
+  "repositories": "https://github.com/koichik/node-flowless.git",
+  "engines": {
+    "node": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  }
+}
