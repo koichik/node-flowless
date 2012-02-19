@@ -80,6 +80,35 @@ Returns a new function which runs functions in parallel.
        of `functions`.
      * `cb`: A callback function.
 
+### flowless.parallelMap(array, fn, cb)
+
+Produces a new array of values by mapping each value in the given array
+through the asynchronous function.
+
+ * Arguments
+   * `array`: an array of values.
+   * `fn`: An asynchronous function.
+     It can be an array passed to [makeFunc()](#flowless.makeFunc).
+   * `cb`: A callback function.
+
+### flowless.makeParallelMap(fn)
+
+Returns a new function which produces a new array of values by mapping
+each value in the given array through the asynchronous function.
+
+ * Arguments
+   * `fn`: An asynchronous function.
+     It can be an array passed to [makeFunc()](#flowless.makeFunc).
+ * Returns
+   * A new function which produces a new array of values by mapping
+     each value in the given `array` through `fn`.
+
+         `function(array, cb)`
+
+   * Arguments
+     * `array`: an array of values.
+     * `cb`: A callback function.
+
 ### flowless.makeFunc(template)
 
 Returns a new function from a template.

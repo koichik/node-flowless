@@ -1,24 +1,23 @@
 'use strict';
 
 var fs = require('fs');
-var path = require('path');
 var flowless = require('../index');
-var file = path.join(__dirname, 'path3');
 
 flowless.series([
-  [fs.stat, file],
-  function(stat, cb) {
-    if (!stat.isFile()) {
-      return cb(file +  ' is not a file');
-    }
-    fs.readFile(file, 'utf8', cb);
-  },
-  function(data, cb) {
-    fs.writeFile(file, data.toUpperCase(), cb);
-  }
-], function(err, results) {
-  if (err) {
-    return console.log(err);
-  }
-  console.log('completed');
+  [fs.readdir, __dirname],
+  flowless.makeAsync(function(files) {
+    return files.filter(function(filename) {
+      return /\.js$/.test(filename);
+    }).map(function(filename) {
+      return __dirname + '/' + filename;
+    });
+  }),
+  flowless.makeParallelMap([fs.readFile, flowless.first, 'utf8'])
+], function(err, files) {
+  if (err) throw err;
+  files.forEach(function (file) {
+    console.log('-----');
+    console.log(file);
+  });
 });
+
