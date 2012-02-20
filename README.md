@@ -114,13 +114,17 @@ each value in the given array through the asynchronous function.
 Returns a new function from a template.
 
  * Arguments
-   * `template`: An array of function template. The first element must be
-     a function. The rest of elements are used as a parameter of the function.
-     The array can include a special value, `flowless.first`, `flowless.second`
-     and `flowless.third`. When the returned function is called, they are
-     replaced with the actual argument of a corresponding position.
+   * `template`: An array of function template.
+     The first or second element must be a function.
+     If the first element is not a function,
+     it is used as a context (`this`) object.
+     The rest of elements are used as a parameter of the function.
+     The array can include a special value,
+     `flowless.first`, `flowless.second` and `flowless.third`.
+     When the returned function is called,
+     they are replaced with the actual argument of a corresponding position.
  * Returns
-   * A function which invokes the first element of `template`.
+   * A function which invokes the first or second element of `template`.
 
          `function([args,...] cb)`
 

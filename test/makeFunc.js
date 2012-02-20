@@ -12,8 +12,15 @@ function minus(a, b, cb) {
   });
 }
 
+var obj = {};
+obj.plus = function(a, b, cb) {
+  process.nextTick(function() {
+    cb(null, a + b);
+  });
+};
+
 describe('makeFunc', function() {
-  it('should finish without error', function(done) {
+  it('should invoke first element as a function', function(done) {
     var func = flowless.makeFunc([minus, 1, 2]);
     func.should.be.a('function');
     func(function(err, result) {
@@ -27,6 +34,22 @@ describe('makeFunc', function() {
       });
     });
   }),
+
+  it('should invoke second element as a function', function(done) {
+    var func = flowless.makeFunc([obj, obj.plus, 1, 2]);
+    func.should.be.a('function');
+    func(function(err, result) {
+      should.not.exist(err);
+      result.should.equal(3);
+      // again
+      func(function(err, result) {
+        should.not.exist(err);
+        result.should.equal(3);
+        done();
+      });
+    });
+  }),
+
   it('should convert placeholder to actual argument', function(done) {
     var func = flowless.makeFunc([minus, second, first]);
     func.should.be.a('function');
