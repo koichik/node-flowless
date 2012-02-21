@@ -2,15 +2,18 @@ var fs = require('fs');
 var path = require('path');
 var flowless = require('../index');
 
+var path1 = path.join(__dirname, 'path1');
+var path2 = path.join(__dirname, 'path2');
+var path3 = path.join(__dirname, 'path3');
+
 flowless.series([
   flowless.makeParallel([
-    [fs.readFile, path.join(__dirname, 'path1'), 'utf8'],
-    [fs.readFile, path.join(__dirname, 'path2'), 'utf8']
+    [fs.readFile, path1, 'utf8'],
+    [fs.readFile, path2, 'utf8']
   ]),
-  function(results, cb) {
-    fs.writeFile(path.join(__dirname, 'path3'), results.join(''), cb);
-  },
-  [fs.readFile, path.join(__dirname, 'path3'), 'utf8']
+  flowless.array.join(''),
+  [fs.writeFile, path3, flowless.first],
+  [fs.readFile, path3, 'utf8']
 ], function(err, result) {
   if (err) throw err;
   console.log(result);

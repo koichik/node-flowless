@@ -26,7 +26,7 @@ flowless is not a flawless :)
 
     $ npm install flowless
 
-## API
+## Core API
 
 ### flowless.series(functions, cb)
 
@@ -144,26 +144,109 @@ is equivalent of:
 
     fs.readFile('foo.txt', 'utf8', cb);
 
+## Extras API
+
+### flowless.array
+
+Provides asynchronous style wrapper functions to wrap a method of `Array`.
+It takes the first argument as `this`.
+
+Example:
+
+    flowless.serieas([
+      ...
+      flowless.array.join(':'),
+      ...
+    ], cb);
+
+is equivalent of:
+
+    flowless.serieas([
+      ...
+      function(self, cb) {
+        cb(null, self.join(':'));
+      },
+      ...
+    ], cb);
+
+### flowless.string
+
+Provides asynchronous style wrapper functions to wrap a method of `String`.
+It takes the first argument as `this`.
+
+Example:
+
+    flowless.serieas([
+      ...
+      flowless.string.split(':'),
+      ...
+    ], cb);
+
+is equivalent of:
+
+    flowless.serieas([
+      ...
+      function(self, cb) {
+        cb(null, self.split(':'));
+      },
+      ...
+    ], cb);
+
+### flowless.generate(args...)
+
+Returns a new asynchronous style function which passes a given arguments
+to a callback.
+
+ * Arguments
+   * `args`: Values to be given in a callback.
+ * Returns
+   * An asynchronous style function which passes `args` to a callback.
+
+Example:
+
+    flowless.serieas([
+      flowless.generate(1, 2, 3),
+      ...
+    ], cb);
+
+is equivalent of:
+
+    flowless.serieas([
+      function(cb) {
+        cb(null, 1, 2, 3);
+      },
+      ...
+    ], cb);
+
 ### flowless.makeAsync(fn)
 
-Returns a new function which invokes a synchronous function.
+Returns a new asynchronous style function which invokes a synchronous function
+and passes the return value to a callback.
 
  * Arguments
    * `fn`: A synchronous function.
  * Returns
-   * A function which invokes a synchronous function.
+   * An asynchronous style function which invokes a synchronous function.
 
 Example:
 
-    var fn = flowless.makeAsync(function(a, b) {
-      return a + b;
-    }
+    flowless.serieas([
+      ...
+      flowless.makeAsync(function(a, b) {
+        return a + b;
+      }),
+      ...
+    ], cb);
 
 is equivalent of:
 
-    var fn = function(a, b, cb) {
-      cb(a + b);
-    }
+    flowless.serieas([
+      ...
+      function(a, b, cb) {
+        cb(a + b);
+      }),
+      ...
+    ], cb);
 
 ## Acknowledgment
 
