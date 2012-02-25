@@ -1,9 +1,15 @@
 'use strict';
 
-module.exports = require('./lib/flowless');
+module.exports = exports = require('./lib/flowless');
 
 var extras = require('./lib/extras');
 var keys = Object.keys(extras);
 for (var i = 0, len = keys.length; i < len; ++i) {
-  module.exports[keys[i]] = extras[keys[i]];
+  var key = keys[i];
+  exports[key] = extras[key];
 }
+
+var utils = require('./lib/utils');
+exports.first = utils.first;
+exports.second = utils.second;
+exports.third = utils.third;

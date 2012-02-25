@@ -2,9 +2,9 @@
 
 var path = require('path');
 var should = require('should');
-var flowless = require('../index');
-var first = flowless.first;
-var second = flowless.second;
+var utils = require('../lib/utils');
+var first = utils.first;
+var second = utils.second;
 
 function minus(a, b, cb) {
   process.nextTick(function() {
@@ -21,11 +21,12 @@ obj.plus = function(a, b, cb) {
 
 describe('makeFunc', function() {
   it('should invoke first element as a function', function(done) {
-    var func = flowless.makeFunc([minus, 1, 2]);
+    var func = utils.makeFunc([minus, 1, 2]);
     func.should.be.a('function');
     func(function(err, result) {
       should.not.exist(err);
       result.should.equal(-1);
+
       // again
       func(function(err, result) {
         should.not.exist(err);
@@ -33,14 +34,15 @@ describe('makeFunc', function() {
         done();
       });
     });
-  }),
+  });
 
   it('should invoke second element as a function', function(done) {
-    var func = flowless.makeFunc([obj, obj.plus, 1, 2]);
+    var func = utils.makeFunc([obj, obj.plus, 1, 2]);
     func.should.be.a('function');
     func(function(err, result) {
       should.not.exist(err);
       result.should.equal(3);
+
       // again
       func(function(err, result) {
         should.not.exist(err);
@@ -48,14 +50,15 @@ describe('makeFunc', function() {
         done();
       });
     });
-  }),
+  });
 
   it('should convert placeholder to actual argument', function(done) {
-    var func = flowless.makeFunc([minus, second, first]);
+    var func = utils.makeFunc([minus, second, first]);
     func.should.be.a('function');
     func(1, 2, function(err, result) {
       should.not.exist(err);
       result.should.equal(1);
+
       // again
       func(1, 2, function(err, result) {
         should.not.exist(err);

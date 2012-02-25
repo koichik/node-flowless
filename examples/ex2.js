@@ -3,7 +3,7 @@
 var fs = require('fs');
 var flowless = require('../index');
 
-flowless.series([
+flowless.runSeq([
   [fs.readdir, __dirname],
   flowless.array.filter(function(filename) {
     return /\.js$/.test(filename);
@@ -11,10 +11,10 @@ flowless.series([
   flowless.array.map(function(filename) {
     return __dirname + '/' + filename;
   }),
-  flowless.makeParallelMap([fs.readFile, flowless.first, 'utf8'])
+  flowless.map([fs.readFile, flowless.first, 'utf8'])
 ], function(err, files) {
   if (err) throw err;
-  files.forEach(function (file) {
+  files.forEach(function(file) {
     console.log('-----');
     console.log(file);
   });

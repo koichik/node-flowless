@@ -3,8 +3,6 @@
 var path = require('path');
 var should = require('should');
 var flowless = require('../index');
-var first = flowless.first;
-var second = flowless.second;
 
 function minus(a, b) {
   return a - b;

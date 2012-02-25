@@ -3,9 +3,9 @@
 var should = require('should');
 var flowless = require('../index');
 
-describe('series', function() {
+describe('seq', function() {
   it('should finish without error', function(done) {
-    flowless.series([
+    flowless.runSeq([
       function(cb) {
         cb(null, 1);
       },
@@ -25,9 +25,10 @@ describe('series', function() {
       val3.should.equal(6);
       done();
     });
-  }),
+  });
+
   it('should finish with error if error is passed to callback', function(done) {
-    flowless.series([
+    flowless.runSeq([
       function(cb) {
         cb(null, 1);
       },
@@ -43,9 +44,10 @@ describe('series', function() {
       err.message.should.equal('oops');
       done();
     });
-  }),
+  });
+
   it('should finish with error if exception is occurred', function(done) {
-    flowless.series([
+    flowless.runSeq([
       function(cb) {
         cb(null, 1);
       },
