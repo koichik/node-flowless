@@ -39,7 +39,7 @@ flowless provides two kind of API for control-flow.
  * Runs asynchronous functions immediately:
    * `runSeq()`, `runPar()` and `runMap()`.
  * Returns a function which runs asynchronous functions:
-   * `seq()`, `par()` and `map().
+   * `seq()`, `par()` and `map()`.
 
 The former is similar to the function that other control-flow modules
 (e.g. [Async](https://github.com/caolan/async)) provide.
