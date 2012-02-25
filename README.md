@@ -498,14 +498,14 @@ flowless.seq([
 ### flowless.bindSecond(target, name)
 ### flowless.bindThird(target, name)
 
-Returns a new asynchronous style function which binds a argument of the
+Returns a new asynchronous style function which binds an argument of the
 specific position (first, second or third) to a property of a target object.
 
  * Arguments
    * `target`: An object that a value is bound.
    * `name`: A string of property name that a value is bound.
  * Returns
-   * An asynchronous style function which binds a argument of the specific
+   * An asynchronous style function which binds an argument of the specific
      position to a property of `target` object.
 
 Example:
@@ -530,6 +530,30 @@ flowless.seq([
     cb(null, name);
   },
   ...
+]);
+```
+
+### flowless.flattenFirst()
+### flowless.flattenSecond()
+### flowless.flattenThird()
+
+Returns a new asynchronous style function which flatten an argument of the
+specific position (first, second or third).
+
+ * Returns
+   * An asynchronous style function which flatten an argument of the specific
+     position. If an argument is not an array, it is passed to the callback.
+
+Example:
+
+```javascript
+var context = {};
+flowless.seq([
+  flowless.generate(['foo', 'bar', 'baz']),
+  flowless.flattenFirst(),
+  function(foo, bar, baz, cb) { // foo: 'foo', bar: 'bar', baz: 'baz'
+    ...
+  }
 ]);
 ```
 

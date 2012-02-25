@@ -1,6 +1,7 @@
 # Changelog
 
 - 0.0.2 (Not yet released)
+  - extras: Added `flattenFirst()`, `flattenSecond()` and `flattenThird()`.
 
 - 0.0.1 (2012/02/25)
   - Renamed `series()` to `runSeq()`.

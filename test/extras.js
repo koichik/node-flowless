@@ -26,6 +26,19 @@ describe('extras', function() {
     });
   });
 
+  it('should flatten first argument', function(done) {
+    var fn = flowless.flattenFirst();
+    fn([1, 2, 3, 4, 5], function(err, a, b, c, d, e) {
+      should.not.exist(err);
+      a.should.equal(1);
+      b.should.equal(2);
+      c.should.equal(3);
+      d.should.equal(4);
+      e.should.equal(5);
+      done();
+    });
+  });
+
   it('should call method of Array', function(done) {
     var fn = flowless.array.join(':');
     fn(['foo', 'bar'], function(err, result) {
