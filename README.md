@@ -123,7 +123,7 @@ flowless.runSeq([
 });
 ```
 
-### Exception handling in the same way as an error.
+### Exception handling in the same way as an error
 
 When an error is passed to a callback.
 
@@ -163,6 +163,36 @@ flowless.runSeq([
 
 In both of the cases, `three()` is not called and `Error` is passed to
 the `allDone()`. 
+
+### Logging for debug
+
+If `NODE\_DEBUG` environment variable contains `flowless`,
+flowless outputs logs for debug.
+For example, the first example of this page, it is output log as follows:
+
+    $ NODE_DEBUG=flowless node ex.js
+    FLOWLESS: BEGIN seq at (/tmp/ex.js:4)
+    FLOWLESS: begin seq[0] at (/tmp/ex.js:4) with: [ [Function: next] ]
+    FLOWLESS: BEGIN par at (/tmp/ex.js:5)
+    FLOWLESS: begin par[0] at (/tmp/ex.js:5) with: [ [Function], 'path1', 'utf8' ]
+    FLOWLESS: begin par[1] at (/tmp/ex.js:5) with: [ [Function], 'path2', 'utf8' ]
+    FLOWLESS: end par[0] at (/tmp/ex.js:5) with: [ null, 'aaa\nbbb\nccc\n' ]
+    FLOWLESS: end par[1] at (/tmp/ex.js:5) with: [ null, 'xxx\nyyy\nzzz\n' ]
+    FLOWLESS: END par at (/tmp/ex.js:5) with: [ 'aaa\nbbb\nccc\n', 'xxx\nyyy\nzzz\n' ]
+    FLOWLESS: end seq[0] at (/tmp/ex.js:4) with : [ null, [ 'aaa\nbbb\nccc\n', 'xxx\nyyy\nzzz\n' ] ]
+    FLOWLESS: begin seq[1] at (/tmp/ex.js:4) with: [ [ 'aaa\nbbb\nccc\n', 'xxx\nyyy\nzzz\n' ], [Function: next] ]
+    FLOWLESS: end seq[1] at (/tmp/ex.js:4) with : [ null ]
+    FLOWLESS: begin seq[2] at (/tmp/ex.js:4) with: [ [Function: next] ]
+    FLOWLESS: end seq[2] at (/tmp/ex.js:4) with : [ null, 'aaa\nbbb\nccc\nxxx\nyyy\nzzz\n' ]
+    FLOWLESS: END seq at (/tmp/ex.js:4)
+    aaa
+    bbb
+    ccc
+    xxx
+    yyy
+    zzz
+
+    all done
 
 ## Core API
 

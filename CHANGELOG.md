@@ -1,6 +1,7 @@
 # Changelog
 
 - 0.0.2 (Not yet released)
+  - core: Added logging for debug.
   - extras: Added `flattenFirst()`, `flattenSecond()` and `flattenThird()`.
 
 - 0.0.1 (2012/02/25)
