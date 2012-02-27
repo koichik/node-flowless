@@ -64,4 +64,18 @@ describe('seq', function() {
       done();
     });
   });
+
+  it('should invoke callback asynchronously', function(done) {
+    var returned = false;
+    flowless.runSeq([
+      function(cb) {
+        cb(null); // synchronously
+      }
+    ], function(err) {
+      should.not.exist(err);
+      returned.should.be.true;
+      done();
+    });
+    returned = true;
+  });
 });

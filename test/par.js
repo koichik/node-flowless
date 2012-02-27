@@ -77,4 +77,18 @@ describe('par', function() {
       done();
     });
   });
+
+  it('should invoke callback asynchronously', function(done) {
+    var returned = false;
+    flowless.runPar([
+      function(cb) {
+        cb(null); // synchronously
+      }
+    ], function(err) {
+      should.not.exist(err);
+      returned.should.be.true;
+      done();
+    });
+    returned = true;
+  });
 });

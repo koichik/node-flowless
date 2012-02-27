@@ -56,4 +56,18 @@ describe('map', function() {
       done();
     });
   });
+
+  it('should invoke callback asynchronously', function(done) {
+    var returned = false;
+    flowless.runMap([
+      1, 2, 3
+    ], function(n, cb) {
+      cb(null); // synchronously
+    }, function(err, results) {
+      should.not.exist(err);
+      returned.should.be.true;
+      done();
+    });
+    returned = true;
+  });
 });
