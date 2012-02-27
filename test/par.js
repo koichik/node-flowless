@@ -91,4 +91,16 @@ describe('par', function() {
     });
     returned = true;
   });
+
+  it('should finish without error if no functions', function(done) {
+    var returned = false;
+    flowless.runPar([
+    ], function(err, results) {
+      should.not.exist(err);
+      results.should.be.empty;
+      returned.should.be.true;
+      done();
+    });
+    returned = true;
+  });
 });

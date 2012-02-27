@@ -78,4 +78,15 @@ describe('seq', function() {
     });
     returned = true;
   });
+
+  it('should finish without error if no functions', function(done) {
+    var returned = false;
+    flowless.runSeq([
+    ], function(err) {
+      should.not.exist(err);
+      returned.should.be.true;
+      done();
+    });
+    returned = true;
+  });
 });

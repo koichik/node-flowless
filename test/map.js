@@ -70,4 +70,18 @@ describe('map', function() {
     });
     returned = true;
   });
+
+  it('should finish without error if no functions', function(done) {
+    var returned = false;
+    flowless.runMap([
+    ], function(value, cb) {
+      should.fail();
+    }, function(err, results) {
+      should.not.exist(err);
+      results.should.be.empty;
+      returned.should.be.true;
+      done();
+    });
+    returned = true;
+  });
 });
