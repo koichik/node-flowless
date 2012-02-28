@@ -2,10 +2,11 @@
 
 var should = require('should');
 var flowless = require('../index');
+var extras = flowless.extras;
 
 describe('extras', function() {
   it('should generate data', function(done) {
-    var fn = flowless.generate('foo', 'bar');
+    var fn = extras.generate('foo', 'bar');
     fn(function(err, foo, bar) {
       should.not.exist(err);
       foo.should.equal('foo');
@@ -16,7 +17,7 @@ describe('extras', function() {
 
   it('should bind first argument', function(done) {
     var context = {};
-    var fn = flowless.bindFirst(context, 'name');
+    var fn = extras.bindFirst(context, 'name');
     fn('hoge', 'moge', function(err, hoge, moge) {
       should.not.exist(err);
       context.name.should.equal('hoge');
@@ -27,7 +28,7 @@ describe('extras', function() {
   });
 
   it('should flatten first argument', function(done) {
-    var fn = flowless.flattenFirst();
+    var fn = extras.flattenFirst();
     fn([1, 2, 3, 4, 5], function(err, a, b, c, d, e) {
       should.not.exist(err);
       a.should.equal(1);
@@ -40,7 +41,7 @@ describe('extras', function() {
   });
 
   it('should call method of Array', function(done) {
-    var fn = flowless.array.join(':');
+    var fn = extras.array.join(':');
     fn(['foo', 'bar'], function(err, result) {
       should.not.exist(err);
       result.should.equal('foo:bar');
@@ -49,7 +50,7 @@ describe('extras', function() {
   });
 
   it('should call method of String', function(done) {
-    var fn = flowless.string.split(':');
+    var fn = extras.string.split(':');
     fn('foo:bar', function(err, result) {
       should.not.exist(err);
       result.should.have.lengthOf(2);
@@ -60,7 +61,7 @@ describe('extras', function() {
   });
 
   it('should convert placeholder to actual argument', function(done) {
-    var fn = flowless.string.concat(flowless.second);
+    var fn = extras.string.concat(flowless.second);
     fn('foo', 'bar', function(err, result) {
       should.not.exist(err);
       result.should.equal('foobar');

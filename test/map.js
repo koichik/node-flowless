@@ -2,13 +2,14 @@
 
 var should = require('should');
 var flowless = require('../index');
+var extras = flowless.extras;
 
 describe('map', function() {
   it('should finish without error', function(done) {
     flowless.runMap([
       ['aaa', 'bbb'],
       ['xxx', 'yyy', 'zzz']
-    ], flowless.makeAsync(function(array) {
+    ], extras.makeAsync(function(array) {
       return array.join(', ');
     }), function(err, results) {
       should.not.exist(err);
@@ -40,9 +41,7 @@ describe('map', function() {
 
   it('should run in sequential', function(done) {
     var par = 0;
-    flowless.runMap(1, [
-      0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-    ], function(n, cb) {
+    var map = flowless.map(1, function(n, cb) {
       ++par;
       par.should.equal(1);
       process.nextTick(function() {
@@ -50,7 +49,10 @@ describe('map', function() {
         --par;
         cb(null, n);
       });
-    }, function(err, results) {
+    });
+    map([
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+    ], function(err, results) {
       should.not.exist(err);
       results.should.have.lengthOf(10);
       done();

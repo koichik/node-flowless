@@ -2,13 +2,14 @@
 
 var fs = require('fs');
 var flowless = require('../index');
+var extras = flowless.extras;
 
 flowless.runSeq([
   [fs.readdir, __dirname],
-  flowless.array.filter(function(filename) {
+  extras.array.filter(function(filename) {
     return /\.js$/.test(filename);
   }),
-  flowless.array.map(function(filename) {
+  extras.array.map(function(filename) {
     return __dirname + '/' + filename;
   }),
   flowless.map([fs.readFile, flowless.first, 'utf8'])

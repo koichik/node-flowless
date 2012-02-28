@@ -196,6 +196,10 @@ For example, the first example of this page, it is output log as follows:
 
 ## Core API
 
+```javascript
+var flowless = require('flowless');
+```
+
 ### flowless.seq(functions)
 
 Returns an asynchronous style function which runs functions in sequential.
@@ -440,7 +444,11 @@ flowless.seq([
 
 ## Extra API
 
-### flowless.array
+```javascript
+var extras = require('flowless').extras;
+```
+
+### extras.array
 
 Provides asynchronous style functions to wrap a method of `Array`.
 It takes the first argument as `this`.
@@ -450,7 +458,7 @@ Example:
 ```javascript
 flowless.seq([
   ...
-  flowless.array.join(':'),
+  extras.array.join(':'),
   ...
 ]);
 ```
@@ -467,7 +475,7 @@ flowless.seq([
 ]);
 ```
 
-### flowless.string
+### extras.string
 
 Provides asynchronous style functions to wrap a method of `String`.
 It takes the first argument as `this`.
@@ -477,7 +485,7 @@ Example:
 ```javascript
 flowless.seq([
   ...
-  flowless.string.split(':'),
+  extras.string.split(':'),
   ...
 ]);
 ```
@@ -494,7 +502,7 @@ flowless.seq([
 ]);
 ```
 
-### flowless.generate(args...)
+### extras.generate(args...)
 
 Returns a new asynchronous style function which passes a given arguments
 to a callback.
@@ -508,7 +516,7 @@ Example:
 
 ```javascript
 flowless.seq([
-  flowless.generate(1, 2, 3),
+  extras.generate(1, 2, 3),
   ...
 ]);
 ```
@@ -524,9 +532,9 @@ flowless.seq([
 ]);
 ```
 
-### flowless.bindFirst(target, name)
-### flowless.bindSecond(target, name)
-### flowless.bindThird(target, name)
+### extras.bindFirst(target, name)
+### extras.bindSecond(target, name)
+### extras.bindThird(target, name)
 
 Returns a new asynchronous style function which binds an argument of the
 specific position (first, second or third) to a property of a target object.
@@ -544,7 +552,7 @@ Example:
 var context = {};
 flowless.seq([
   ...
-  flowless.bindFirst(context, 'name'),
+  extras.bindFirst(context, 'name'),
   ...
 ]);
 ```
@@ -563,9 +571,9 @@ flowless.seq([
 ]);
 ```
 
-### flowless.flattenFirst()
-### flowless.flattenSecond()
-### flowless.flattenThird()
+### extras.flattenFirst()
+### extras.flattenSecond()
+### extras.flattenThird()
 
 Returns a new asynchronous style function which flatten an argument of the
 specific position (first, second or third).
@@ -579,15 +587,15 @@ Example:
 ```javascript
 var context = {};
 flowless.seq([
-  flowless.generate(['foo', 'bar', 'baz']),
-  flowless.flattenFirst(),
+  extras.generate(['foo', 'bar', 'baz']),
+  extras.flattenFirst(),
   function(foo, bar, baz, cb) { // foo: 'foo', bar: 'bar', baz: 'baz'
     ...
   }
 ]);
 ```
 
-### flowless.makeAsync(fn)
+### extras.makeAsync(fn)
 
 Returns a new asynchronous style function which invokes a synchronous function
 and passes the return value to a callback.
@@ -602,7 +610,7 @@ Example:
 ```javascript
 flowless.seq([
   ...
-  flowless.makeAsync(encodeURI),
+  extras.makeAsync(encodeURI),
   ...
 ]);
 ```
