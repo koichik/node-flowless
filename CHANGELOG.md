@@ -2,6 +2,7 @@
 
 - 0.0.2 (Not yet released)
   - core: Added logging for debug.
+  - core: Introduced custom Error object.
   - core: Fixed case where `functions` or `array` is empty.
   - extras: Moved into `extras` namespace.
   - extras: Added `flattenFirst()`, `flattenSecond()` and `flattenThird()`.

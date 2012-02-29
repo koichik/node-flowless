@@ -129,17 +129,17 @@ When an error is passed to a callback.
 
 ```javascript
 flowless.runSeq([
-  function one(cb) {
+  function foo(cb) {
     cb(null);
   },
-  function two(cb) {
-    cb(new Error('two faild')); // Error is passed
+  function bar(cb) {
+    cb(new Error('bar faild')); // Error is passed to cb
   },
-  function three(cb) {
+  function baz(cb) {
     assert.fail('unreachable');
   }
 ], function allDone(err, result) {
-  console.log(err); // [Error: two faild]
+  console.log(err);
 });
 ```
 
@@ -147,22 +147,57 @@ When an exception is thrown.
 
 ```javascript
 flowless.runSeq([
-  function one(cb) {
+  function foo(cb) {
     cb(null);
   },
-  function two(cb) {
-    throw new Error('two faild'); // Error is thrown
+  function bar(cb) {
+    throw new Error('bar faild'); // Error is thrown
   },
-  function three(cb) {
+  function baz(cb) {
     assert.fail('unreachable');
   }
 ], function allDone(err, result) {
-  console.log(err); // [Error: two faild]
+  console.log(err);
 });
 ```
 
 In both of the cases, `three()` is not called and `Error` is passed to
 the `allDone()`. 
+
+Flowless wraps the cause error. It has the information about the location
+in the control-flow that the error occurred.
+
+Example:
+
+```javascsript
+var flowless = require('flowless');
+flowless.runSeq([
+  function foo(cb) {
+    cb(null);
+  },
+  flowless.seq([
+    function bar(cb) {
+      cb(new Error('Oooops!!'));
+    }
+  ]),
+], function(err, result) {
+  console.log(err);
+});
+```
+
+Result:
+
+    { [Error: seq[0] at (/tmp/error.js:6) failed: [Error: Oooops!!]]
+      cause: [Error: Oooops!!],
+      history: 
+       [ { operator: 'seq',
+           index: 0,
+           location: '(/tmp/error.js:6)',
+           reason: 'failed' },
+         { operator: 'runSeq',
+           index: 1,
+           location: '(/tmp/error.js:2)',
+           reason: 'failed' } ] }
 
 ### Logging for debug
 
@@ -171,20 +206,20 @@ flowless outputs logs for debug.
 For example, the first example of this page, it is output log as follows:
 
     $ NODE_DEBUG=flowless node ex.js
-    FLOWLESS: BEGIN seq at (/tmp/ex.js:4)
-    FLOWLESS: begin seq[0] at (/tmp/ex.js:4) with: [ [Function: next] ]
+    FLOWLESS: BEGIN runSeq at (/tmp/ex.js:4)
+    FLOWLESS: begin runSeq[0] at (/tmp/ex.js:4) with: [ [Function: next] ]
     FLOWLESS: BEGIN par at (/tmp/ex.js:5)
     FLOWLESS: begin par[0] at (/tmp/ex.js:5) with: [ [Function], 'path1', 'utf8' ]
     FLOWLESS: begin par[1] at (/tmp/ex.js:5) with: [ [Function], 'path2', 'utf8' ]
     FLOWLESS: end par[0] at (/tmp/ex.js:5) with: [ null, 'aaa\nbbb\nccc\n' ]
     FLOWLESS: end par[1] at (/tmp/ex.js:5) with: [ null, 'xxx\nyyy\nzzz\n' ]
     FLOWLESS: END par at (/tmp/ex.js:5) with: [ 'aaa\nbbb\nccc\n', 'xxx\nyyy\nzzz\n' ]
-    FLOWLESS: end seq[0] at (/tmp/ex.js:4) with : [ null, [ 'aaa\nbbb\nccc\n', 'xxx\nyyy\nzzz\n' ] ]
-    FLOWLESS: begin seq[1] at (/tmp/ex.js:4) with: [ [ 'aaa\nbbb\nccc\n', 'xxx\nyyy\nzzz\n' ], [Function: next] ]
-    FLOWLESS: end seq[1] at (/tmp/ex.js:4) with : [ null ]
-    FLOWLESS: begin seq[2] at (/tmp/ex.js:4) with: [ [Function: next] ]
-    FLOWLESS: end seq[2] at (/tmp/ex.js:4) with : [ null, 'aaa\nbbb\nccc\nxxx\nyyy\nzzz\n' ]
-    FLOWLESS: END seq at (/tmp/ex.js:4)
+    FLOWLESS: end runSeq[0] at (/tmp/ex.js:4) with : [ null, [ 'aaa\nbbb\nccc\n', 'xxx\nyyy\nzzz\n' ] ]
+    FLOWLESS: begin runSeq[1] at (/tmp/ex.js:4) with: [ [ 'aaa\nbbb\nccc\n', 'xxx\nyyy\nzzz\n' ], [Function: next] ]
+    FLOWLESS: end runSeq[1] at (/tmp/ex.js:4) with : [ null ]
+    FLOWLESS: begin runSeq[2] at (/tmp/ex.js:4) with: [ [Function: next] ]
+    FLOWLESS: end runSeq[2] at (/tmp/ex.js:4) with : [ null, 'aaa\nbbb\nccc\nxxx\nyyy\nzzz\n' ]
+    FLOWLESS: END runSeq at (/tmp/ex.js:4)
     aaa
     bbb
     ccc

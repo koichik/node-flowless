@@ -6,20 +6,17 @@ var utils = require('../lib/utils');
 
 describe('utils', function() {
   it('should resolve location', function(done) {
-    // annonymous function
-    var location = utils.getLocation(true);
-    location.should.match(/^\(.*/);
-
-    // named function
-    (function test() {
-      location = utils.getLocation(true);
+    // function
+    function test() {
+      var location = utils.getLocation();
       location.should.match(/^test\(.*/);
-    })();
+    }
+    test();
 
     // method
     function Foo() {};
     Foo.prototype.bar = function() {
-      location = utils.getLocation(true);
+      var location = utils.getLocation();
       location.should.match(/^Foo\.bar\(.*/);
     };
     var foo = new Foo();

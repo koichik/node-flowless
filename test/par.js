@@ -53,7 +53,7 @@ describe('par', function() {
       }
     ], function(err) {
       should.exist(err);
-      err.message.should.equal('oops');
+      err.message.should.match(/\[Error: oops]/);
       done();
     });
   });
@@ -73,7 +73,7 @@ describe('par', function() {
       }
     ], function(err) {
       should.exist(err);
-      err.message.should.equal('oops');
+      err.message.should.match(/\[Error: oops]/);
       done();
     });
   });

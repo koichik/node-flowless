@@ -8,7 +8,11 @@ flowless.runSeq([
     cb(null);
   },
   function two(cb) {
-    cb(new Error('two failed'));
+    flowless.runSeq([
+      function inner(cb) {
+        cb(new Error('two-inner failed'));
+      }
+    ], cb);
   },
   function three(cb) {
     assert.fail('unreachable');
@@ -22,7 +26,11 @@ flowless.runSeq([
     cb(null);
   },
   function two(cb) {
-    throw new Error('two failed');
+    flowless.runSeq([
+      function inner(cb) {
+        throw new Error('two-inner failed');
+      }
+    ], cb);
   },
   function three(cb) {
     assert.fail('unreachable');
