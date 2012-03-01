@@ -382,12 +382,16 @@ by mapping each value in the given array through the returned function.
    * An asynchronous style function which produces a new array of values
      by mapping each value in the given `array` through `fn`.
 
-`fn` should be:
+`fn` should be one of:
 
     function(element, cb)
+    function(element, index, cb)
+    function(element, index, array, cb)
 
  * Arguments
-   * `element`: an element of `array` passed to returned function.
+   * `element`: An element of `array` passed to returned function.
+   * `index`: An index number of the element.
+   * `array`: An array passed to returned function.
    * `cb`: A callback function.
 
 Returned function is:
@@ -414,12 +418,16 @@ through the returned function.
      It can be an array as a *Function Template* that is explained below.
    * `cb`: A callback function.
 
-`fn` should be:
+`fn` should be one of:
 
     function(element, cb)
+    function(element, index, cb)
+    function(element, index, array, cb)
 
  * Arguments
    * `element`: an element of `array`.
+   * `index`: An index number of the element.
+   * `array`: `array`  passed to `runMap()`.
    * `cb`: A callback function.
 
 Example:

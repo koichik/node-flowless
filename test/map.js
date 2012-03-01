@@ -86,4 +86,16 @@ describe('map', function() {
     });
     returned = true;
   });
+
+  it('should call function as same as Array.map()', function(done) {
+    var data = ['foo', 'bar'];
+    flowless.runMap(data, function(value, index, array, cb) {
+      value.should.equal(data[index]);
+      array.should.equal(data);
+      cb(null);
+    }, function(err, results) {
+      should.not.exist(err);
+      done();
+    });
+  });
 });

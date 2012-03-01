@@ -4,6 +4,7 @@
   - core: Added logging for debug.
   - core: Introduced custom Error object.
   - core: Fixed case where `functions` or `array` is empty.
+  - core: Changed iterator of `map()/runMap()` to consist with `Array.map()`.
   - extras: Moved into `extras` namespace.
   - extras: Added `flattenFirst()`, `flattenSecond()` and `flattenThird()`.
 
