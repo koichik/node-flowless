@@ -1,6 +1,6 @@
 # Changelog
 
-- 0.0.2 (Not yet released)
+- 0.0.2 (2012/03/04)
   - core: Added logging for debug.
   - core: Introduced custom Error object.
   - core: Fixed case where `functions` or `array` is empty.

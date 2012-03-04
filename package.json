@@ -1,6 +1,6 @@
 {
   "name": "flowless",
-  "version": "0.0.2-pre",
+  "version": "0.0.2",
   "description": "Less but better control-flow library",
   "homepage": "https://github.com/koichik/node-flowless/",
   "author": "Koichi Kobayashi <koichik@improvement.jp>",
